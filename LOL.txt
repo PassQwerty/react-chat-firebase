@@ -1,0 +1,12 @@
+https://console.firebase.google.com/u/0/project/globalchat-efe5f/firestore/data/~2Fchat~2FUkMBHsaiEf12LgeKXxnr
+
+https://firebase.google.com/docs/firestore/quickstart#next_steps
+
+
+https://www.bootdey.com/snippets/view/white-chat
+
+
+
+firebase login
+firebase init
+firebase deploy

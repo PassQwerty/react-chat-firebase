@@ -1,42 +1,24 @@
-import { useEffect } from "react";
-import { useState } from "react";
-import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
-import { firebaseConfig } from "./constants/fireBaseConfig";
-import { collection, query, getDocs, onSnapshot } from "firebase/firestore";
-import { Context } from './context';
+import { Context } from "./context";
 import ItemList from "./components/ItemList";
 import Input from "./components/Input";
+import { useData } from "./hooks/useData";
 
 function App() {
-  const [fetchData, setFetchData] = useState([]);
+  const [fetchData, setFetchData] = useData();
 
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
-
-  const getData = async () => {
-    // const q = query(collection(db, "chat"), where("name", "==", "avatar"));
-    const data = query(collection(db, "chat"));
-
-    onSnapshot(data, (querySnaphot) => {
-      const array = [];
-      querySnaphot.forEach((doc) => {
-        array.unshift({ id: doc.id, data: doc.data() });
-      });
-      array.sort((a, b) => b.date - a.date);
-      setFetchData(array);
-    });
+  const tailwindStyles = {
+    chatContainer: "",
+    main: "bg-gradient-to-r from-indigo-400 to-cyan-400 w-full h-full flex justify-center items-center",
+    wrapperContainer: "w-[50rem] flex flex-col gap-2",
   };
 
-  useEffect(() => {
-    getData();
-  }, [db, fetchData]);
-
   return (
-    <main>
+    <main className={tailwindStyles.main}>
       <Context.Provider value={[fetchData, setFetchData]}>
-        <ItemList data={fetchData} />
-        <Input />
+        <div className={tailwindStyles.wrapperContainer}>
+          <ItemList data={fetchData} />
+          <Input />
+        </div>
       </Context.Provider>
     </main>
   );
